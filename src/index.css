@@ -1,0 +1,164 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Inter:wght@300;400;500;600&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 180 20% 98%;
+    --foreground: 200 15% 15%;
+
+    --card: 180 15% 97%;
+    --card-foreground: 200 15% 15%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 200 15% 15%;
+
+    --primary: 174 42% 41%;
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 190 30% 94%;
+    --secondary-foreground: 200 15% 25%;
+
+    --muted: 180 15% 94%;
+    --muted-foreground: 200 10% 50%;
+
+    --accent: 195 50% 85%;
+    --accent-foreground: 200 15% 15%;
+
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 180 15% 90%;
+    --input: 180 15% 90%;
+    --ring: 174 42% 41%;
+
+    --radius: 0.75rem;
+
+    /* Leher custom tokens */
+    --leher-teal: 174 42% 41%;
+    --leher-teal-light: 174 35% 55%;
+    --leher-teal-glow: 174 50% 65%;
+    --leher-sky: 195 60% 80%;
+    --leher-lavender: 230 30% 85%;
+    --leher-seafoam: 160 30% 85%;
+    --leher-cream: 40 30% 96%;
+
+    --font-display: 'Playfair Display', Georgia, serif;
+    --font-body: 'Inter', system-ui, sans-serif;
+
+    --glow-teal: 0 0 30px hsl(174 50% 65% / 0.4);
+    --glow-teal-strong: 0 0 60px hsl(174 50% 65% / 0.6);
+
+    --sidebar-background: 0 0% 98%;
+    --sidebar-foreground: 240 5.3% 26.1%;
+    --sidebar-primary: 240 5.9% 10%;
+    --sidebar-primary-foreground: 0 0% 98%;
+    --sidebar-accent: 240 4.8% 95.9%;
+    --sidebar-accent-foreground: 240 5.9% 10%;
+    --sidebar-border: 220 13% 91%;
+    --sidebar-ring: 217.2 91.2% 59.8%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+    font-family: var(--font-body);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-display);
+  }
+}
+
+@layer components {
+  .leher-heading {
+    font-family: var(--font-display);
+    @apply tracking-tight leading-tight;
+  }
+
+  .leher-body {
+    font-family: var(--font-body);
+    @apply leading-relaxed;
+  }
+
+  .leher-glow-line {
+    filter: drop-shadow(var(--glow-teal));
+  }
+
+  .leher-glow-line-strong {
+    filter: drop-shadow(var(--glow-teal-strong));
+  }
+
+  .leher-section {
+    @apply py-24 px-6 md:px-12 lg:px-20;
+  }
+
+  .leher-card {
+    @apply bg-card rounded-2xl p-8 border border-border;
+    backdrop-filter: blur(10px);
+  }
+
+  .leher-gradient-bg {
+    background: linear-gradient(
+      180deg,
+      hsl(var(--background)) 0%,
+      hsl(var(--leher-seafoam) / 0.15) 30%,
+      hsl(var(--leher-sky) / 0.1) 60%,
+      hsl(var(--leher-lavender) / 0.08) 100%
+    );
+  }
+
+  .leher-btn-primary {
+    @apply inline-flex items-center justify-center rounded-full px-8 py-4 text-sm font-medium tracking-wider uppercase;
+    background: hsl(var(--primary));
+    color: hsl(var(--primary-foreground));
+    transition: all 0.3s ease;
+  }
+
+  .leher-btn-primary:hover {
+    box-shadow: var(--glow-teal-strong);
+    transform: translateY(-1px);
+  }
+}
+
+/* Smooth scroll */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Line animation shimmer */
+@keyframes line-shimmer {
+  0%, 100% { opacity: 0.7; }
+  50% { opacity: 1; }
+}
+
+@keyframes gentle-float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-4px); }
+}
+
+@keyframes pulse-glow {
+  0%, 100% { filter: drop-shadow(0 0 20px hsl(174 50% 65% / 0.3)); }
+  50% { filter: drop-shadow(0 0 40px hsl(174 50% 65% / 0.6)); }
+}
+
+.animate-line-shimmer {
+  animation: line-shimmer 3s ease-in-out infinite;
+}
+
+.animate-gentle-float {
+  animation: gentle-float 6s ease-in-out infinite;
+}
+
+.animate-pulse-glow {
+  animation: pulse-glow 4s ease-in-out infinite;
+}
