@@ -4,6 +4,10 @@ import { useState, useRef, useEffect } from "react";
 import { Instagram, Mail, Phone } from "lucide-react";
 import ishikaImg from "../assets/images/ishika.jpeg";
 import prishaImg from "../assets/images/prisha.jpeg";
+import img1 from "../assets/images/1.jpeg";
+import img2 from "../assets/images/2.jpeg";
+import img3 from "../assets/images/3.jpeg";
+import img4 from "../assets/images/4.jpeg";
 
 
 
@@ -48,13 +52,14 @@ const stats = [
   { number: "50+", label: "Partner Organisations" },
 ];
 
-  const links = [
-    { label: "About", href: "#noise" },
-    { label: "Our Work", href: "#awareness" },
-    { label: "Approach", href: "#understanding" },
-    { label: "Impact", href: "#clarity" },
-    { label: "Contact", href: "#contact" },
-  ];
+
+const links = [
+  { label: "About", href: "#noise" },
+  { label: "Our Work", href: "#awareness" },
+  { label: "Approach", href: "#understanding" },
+  { label: "Impact", href: "#clarity" },
+  { label: "Contact", href: "#contact" },
+];
 
 
 const cards = [
@@ -75,6 +80,8 @@ const cards = [
 export default function ContentSections() {
 
   const formRef = useRef<HTMLFormElement | null>(null);
+
+  const [selectedImage, setSelectedImage] = useState<string | null>(null);
 
   const sendEmail = (e: React.FormEvent) => {
     e.preventDefault();
@@ -452,6 +459,66 @@ export default function ContentSections() {
         </div>
       </section>
 
+      {/* Work Gallery */}
+      <div className="mt-16 px-2 md:px-0">
+        <h3 className="text-2xl md:text-3xl font-semibold text-center text-foreground mb-8">
+          Moments From Our Work
+        </h3>
+
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-5">
+
+          {[
+            {
+              src: img1,
+              alt: "Workshop session",
+            },
+            {
+              src: img2,
+              alt: "Counselling activity",
+            },
+            {
+              src: img3,
+              alt: "School workshop",
+            },
+            {
+              src: img4,
+              alt: "Interactive session",
+            },
+          ].map((image, i) => (
+            <div
+              key={i}
+              className="overflow-hidden rounded-2xl shadow-sm group cursor-pointer bg-white"
+              onClick={() => setSelectedImage(image.src)}
+            >
+              <img
+                src={image.src}
+                alt={image.alt}
+                className="w-full h-44 md:h-60 object-cover transition duration-500 group-hover:scale-105"
+              />
+            </div>
+          ))}
+
+        </div>
+      </div>
+
+      {/* Image Modal */}
+      {selectedImage && (
+        <div
+          className="fixed inset-0 bg-black/85 z-50 flex items-center justify-center p-4"
+          onClick={() => setSelectedImage(null)}
+        >
+          <div
+            className="relative inline-block"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <img
+              src={selectedImage}
+              alt="Expanded view"
+              className="max-h-[85vh] w-auto max-w-full rounded-2xl object-contain shadow-2xl"
+            />
+          </div>
+        </div>
+      )}
 
 
       {/* CONTACT */}
@@ -526,7 +593,7 @@ export default function ContentSections() {
 
         {/* Navigation Links */}
         <div className="flex justify-center gap-6 mb-6 flex-wrap">
-                    {links.map((link) => (
+          {links.map((link) => (
             <a
               key={link.href}
               href={link.href}
@@ -538,16 +605,16 @@ export default function ContentSections() {
         </div>
 
         {/* Social Icons */}
+        {/* Instagram */}
         <div className="flex justify-center gap-5 mb-6">
-          {/* Instagram */}
-          <a
+          {/* <a
             href="https://www.instagram.com/ehsaas_foryou"
             target="_blank"
             rel="noopener noreferrer"
             className="hover:text-white/80 transition"
           >
             <Instagram size={18} />
-          </a>
+          </a> */}
 
           {/* WhatsApp */}
           <a
