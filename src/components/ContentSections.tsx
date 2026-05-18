@@ -502,6 +502,7 @@ export default function ContentSections() {
       </div>
 
       {/* Image Modal */}
+      {/* Image Modal */}
       {selectedImage && (
         <div
           className="fixed inset-0 bg-black/85 z-50 flex items-center justify-center p-4"
@@ -511,10 +512,36 @@ export default function ContentSections() {
             className="relative inline-block"
             onClick={(e) => e.stopPropagation()}
           >
+
+            {/* Elegant Close Button */}
+            <button
+              onClick={() => setSelectedImage(null)}
+              className="
+          absolute 
+          top-3 
+          right-3 
+          md:-top-4 
+          md:-right-4
+          w-9 
+          h-9 
+          rounded-full
+          bg-white/15
+          backdrop-blur-md
+          border border-white/20
+          text-white
+          text-xl
+          flex items-center justify-center
+          hover:bg-white/25
+          transition
+        "
+            >
+              ×
+            </button>
+
             <img
               src={selectedImage}
               alt="Expanded view"
-              className="max-h-[85vh] w-auto max-w-full rounded-2xl object-contain shadow-2xl"
+              className="max-h-[85vh] max-w-full rounded-2xl object-contain shadow-2xl"
             />
           </div>
         </div>
