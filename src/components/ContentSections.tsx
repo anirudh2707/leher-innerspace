@@ -8,6 +8,14 @@ import img1 from "../assets/images/1.jpeg";
 import img2 from "../assets/images/2.jpeg";
 import img3 from "../assets/images/3.jpeg";
 import img4 from "../assets/images/4.jpeg";
+import img5 from "../assets/images/5.jpeg";
+import img6 from "../assets/images/6.jpeg";
+import img7 from "../assets/images/7.jpeg";
+import img8 from "../assets/images/8.jpeg";
+import video1 from "../assets/images/Vid1.mp4";
+import video2 from "../assets/images/Vid2.mp4";
+import video3 from "../assets/images/Vid3.mp4";
+import video4 from "../assets/images/Vid4.mp4";
 
 
 
@@ -81,7 +89,23 @@ export default function ContentSections() {
 
   const formRef = useRef<HTMLFormElement | null>(null);
 
-  const [selectedImage, setSelectedImage] = useState<string | null>(null);
+  const [selectedMedia, setSelectedMedia] = useState<{
+    type: "image" | "video";
+    src: string;
+  } | null>(null);
+
+  const galleryRef = useRef<HTMLDivElement>(null);
+
+  const scrollGallery = (direction: "left" | "right") => {
+    if (!galleryRef.current) return;
+
+    const scrollAmount = galleryRef.current.clientWidth * 0.75;
+
+    galleryRef.current.scrollBy({
+      left: direction === "right" ? scrollAmount : -scrollAmount,
+      behavior: "smooth",
+    });
+  };
 
   const sendEmail = (e: React.FormEvent) => {
     e.preventDefault();
@@ -460,70 +484,278 @@ export default function ContentSections() {
       </section>
 
       {/* Work Gallery */}
-      <div className="mt-16 px-2 md:px-0">
-        <h3 className="text-2xl md:text-3xl font-semibold text-center text-foreground mb-8">
-          Moments From Our Work
-        </h3>
+      {/* Work Gallery */}
+      <div className="mt-16">
 
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-5">
+        {/* Heading */}
+        <div className="px-2 md:px-0 mb-8">
+          <h3 className="text-2xl md:text-3xl font-semibold text-center text-foreground">
+            Moments From Our Work
+          </h3>
 
-          {[
-            {
-              src: img1,
-              alt: "Workshop session",
-            },
-            {
-              src: img2,
-              alt: "Counselling activity",
-            },
-            {
-              src: img3,
-              alt: "School workshop",
-            },
-            {
-              src: img4,
-              alt: "Interactive session",
-            },
-          ].map((image, i) => (
-            <div
-              key={i}
-              className="overflow-hidden rounded-2xl shadow-sm group cursor-pointer bg-white"
-              onClick={() => setSelectedImage(image.src)}
-            >
-              <img
-                src={image.src}
-                alt={image.alt}
-                className="w-full h-44 md:h-60 object-cover transition duration-500 group-hover:scale-105"
-              />
-            </div>
-          ))}
+          <p className="text-center text-sm md:text-base text-muted-foreground mt-2">
+            A glimpse into our workshops, activities and conversations.
+          </p>
+        </div>
+
+
+        {/* Gallery */}
+        <div className="relative group">
+
+          {/* Desktop Left Arrow */}
+          <button
+            type="button"
+            onClick={() => scrollGallery("left")}
+            className="
+        hidden md:flex
+        absolute left-3 top-1/2 -translate-y-1/2
+        z-10
+        h-10 w-10
+        items-center justify-center
+        rounded-full
+        bg-white/90
+        shadow-md
+        text-xl
+        opacity-0
+        group-hover:opacity-100
+        transition-all duration-300
+        hover:scale-105
+      "
+            aria-label="Previous"
+          >
+            ←
+          </button>
+
+
+          {/* Scrollable Gallery */}
+          <div
+            ref={galleryRef}
+            className="
+        flex
+        gap-4
+        overflow-x-auto
+        px-2 md:px-0
+        pb-4
+        snap-x snap-mandatory
+        scroll-smooth
+        scrollbar-hide
+      "
+          >
+
+            {[
+              {
+                type: "image",
+                src: img1,
+                alt: "Workshop session",
+              },
+              {
+                type: "image",
+                src: img2,
+                alt: "Counselling activity",
+              },
+              {
+                type: "image",
+                src: img3,
+                alt: "School workshop",
+              },
+              {
+                type: "image",
+                src: img4,
+                alt: "Interactive session",
+              },
+
+              // ADD YOUR VIDEOS HERE
+              {
+                type: "video",
+                src: video1,
+                alt: "Workshop video",
+              },
+              {
+                type: "video",
+                src: video2,
+                alt: "Interactive session video",
+              },
+              {
+                type: "video",
+                src: video3,
+                alt: "Activity video",
+              },
+              {
+                type: "video",
+                src: video4,
+                alt: "Workshop activity video",
+              },
+              {
+                type: "image",
+                src: img5,
+                alt: "Workshop session",
+              },
+              {
+                type: "image",
+                src: img6,
+                alt: "Counselling activity",
+              },
+              {
+                type: "image",
+                src: img7,
+                alt: "School workshop",
+              },
+              {
+                type: "image",
+                src: img8,
+                alt: "Interactive session",
+              },
+
+            ].map((item, i) => (
+
+              <button
+                key={i}
+                type="button"
+                onClick={() =>
+                  setSelectedMedia({
+                    type: item.type as "image" | "video",
+                    src: item.src,
+                  })
+                }
+                className="
+            relative
+            flex-shrink-0
+            w-[78vw]
+            sm:w-[50vw]
+            md:w-[32vw]
+            lg:w-[27vw]
+            h-64
+            md:h-80
+            overflow-hidden
+            rounded-2xl
+            bg-white
+            shadow-sm
+            snap-center
+            group/card
+            cursor-pointer
+          "
+              >
+
+                {item.type === "image" ? (
+
+                  <img
+                    src={item.src}
+                    alt={item.alt}
+                    loading="lazy"
+                    className="
+                w-full h-full
+                object-cover
+                transition-transform
+                duration-500
+                group-hover/card:scale-105
+              "
+                  />
+
+                ) : (
+
+                  <video
+                    src={item.src}
+                    muted
+                    playsInline
+                    preload="metadata"
+                    className="
+                w-full h-full
+                object-cover
+                transition-transform
+                duration-500
+                group-hover/card:scale-105
+              "
+                  />
+
+                )}
+
+
+                {/* Video Play Button */}
+                {item.type === "video" && (
+                  <div
+                    className="
+                absolute
+                left-1/2 top-1/2
+                -translate-x-1/2
+                -translate-y-1/2
+                h-14 w-14
+                rounded-full
+                bg-white/90
+                shadow-lg
+                flex items-center justify-center
+                transition-transform
+                duration-300
+                group-hover/card:scale-110
+              "
+                  >
+                    <span className="ml-1 text-lg">
+                      ▶
+                    </span>
+                  </div>
+                )}
+
+              </button>
+
+            ))}
+
+          </div>
+
+
+          {/* Desktop Right Arrow */}
+          <button
+            type="button"
+            onClick={() => scrollGallery("right")}
+            className="
+        hidden md:flex
+        absolute right-3 top-1/2 -translate-y-1/2
+        z-10
+        h-10 w-10
+        items-center justify-center
+        rounded-full
+        bg-white/90
+        shadow-md
+        text-xl
+        opacity-0
+        group-hover:opacity-100
+        transition-all duration-300
+        hover:scale-105
+      "
+            aria-label="Next"
+          >
+            →
+          </button>
 
         </div>
+
       </div>
 
-      {/* Image Modal */}
-      {/* Image Modal */}
-      {selectedImage && (
+      {selectedMedia && (
         <div
-          className="fixed inset-0 bg-black/85 z-50 flex items-center justify-center p-4"
-          onClick={() => setSelectedImage(null)}
+          className="
+      fixed inset-0
+      bg-black/90
+      z-50
+      flex items-center justify-center
+      p-4
+    "
+          onClick={() => setSelectedMedia(null)}
         >
+
           <div
-            className="relative inline-block"
+            className="relative max-w-full max-h-full"
             onClick={(e) => e.stopPropagation()}
           >
 
-            {/* Elegant Close Button */}
+            {/* Close Button */}
             <button
-              onClick={() => setSelectedImage(null)}
+              type="button"
+              onClick={() => setSelectedMedia(null)}
               className="
-          absolute 
-          top-3 
-          right-3 
-          md:-top-4 
-          md:-right-4
-          w-9 
-          h-9 
+          absolute
+          top-3 right-3
+          md:-top-4 md:-right-4
+          z-20
+          w-9 h-9
           rounded-full
           bg-white/15
           backdrop-blur-md
@@ -538,12 +770,41 @@ export default function ContentSections() {
               ×
             </button>
 
-            <img
-              src={selectedImage}
-              alt="Expanded view"
-              className="max-h-[85vh] max-w-full rounded-2xl object-contain shadow-2xl"
-            />
+
+            {/* Image */}
+            {selectedMedia.type === "image" && (
+              <img
+                src={selectedMedia.src}
+                alt="Expanded view"
+                className="
+            max-h-[85vh]
+            max-w-[92vw]
+            rounded-2xl
+            object-contain
+            shadow-2xl
+          "
+              />
+            )}
+
+
+            {/* Video */}
+            {selectedMedia.type === "video" && (
+              <video
+                src={selectedMedia.src}
+                controls
+                autoPlay
+                playsInline
+                className="
+            max-h-[85vh]
+            max-w-[92vw]
+            rounded-2xl
+            shadow-2xl
+          "
+              />
+            )}
+
           </div>
+
         </div>
       )}
 
